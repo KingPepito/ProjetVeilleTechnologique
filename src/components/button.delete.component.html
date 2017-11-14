@@ -1,0 +1,66 @@
+<link rel="import" href="/bower_components/iron-input/iron-input.html">
+<link rel="import" href="/bower_components/polymer/lib/elements/dom-repeat.html">
+
+<!-- Add style to your element -->
+<dom-module id="delete-btn">
+    <template>
+        <link rel="stylesheet" href="/src/css/bootstrap.css">
+        <link rel="stylesheet" href="/src/css/animate.css">
+        <style>
+
+            button
+            {
+                background-image: url('/src/img/delete-btn.png');
+                height: 50px;
+                width: 50px;
+                background-size: contain;
+                border-radius: 25px;
+                background-color: whitesmoke;
+                border:none;
+                outline:none;
+            }
+
+            button:hover{
+                transition: 1s;
+                background-color: rgba(255, 15, 0, 0.6);
+            }
+
+        </style>
+
+        <div>
+            <button on-click="onDelete">
+            </button>
+        </div>
+
+    </template>
+</dom-module>
+
+<script>
+
+    class DeleteBtn extends Polymer.Element {
+
+        static get is() { return 'delete-btn'; }
+
+        static get properties() {
+            return {
+                idtask: String,
+                onDelete: Function
+            };
+        }
+
+        constructor(){
+
+            super()
+            this.isEditing = false
+            this.animation = "fadeInDown"
+        }
+
+        ready(){
+            super.ready()
+        }
+    }
+
+    customElements.define(DeleteBtn.is, DeleteBtn);
+
+
+</script>

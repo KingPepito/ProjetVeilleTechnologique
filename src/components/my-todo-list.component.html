@@ -1,0 +1,169 @@
+<link rel="import" href="/src/components/task.component.html">
+<link rel="import" href="/src/components/task.title.component.html">
+<link rel="import" href="/src/components/form.add.component.html">
+<link rel="import" href="/src/components/button.delete.component.html">
+<link rel="import" href="/bower_components/iron-input/iron-input.html">
+<link rel="import" href="/bower_components/iron-form/iron-form.html">
+<link rel="import" href="/bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="/bower_components/polymer/lib/elements/dom-if.html">
+
+<!-- Add style to your element -->
+<dom-module id="my-todo-list">
+    <template>
+        <link rel="stylesheet" href="/src/css/bootstrap.css">
+        <link rel="stylesheet" href="/src/css/animate.css">
+        <style>
+
+            /* This would be crazy without webcomponents, but with shadow DOM */
+            /* it only applies to this element's private "shadow DOM" */
+            span {
+                font-weight: bold;
+            }
+
+            .beautiful-title{
+                color: rgba(13, 104, 121, 0.82);
+                text-transform: uppercase;
+                font-family: Helvetica;
+            }
+
+            .task-element{
+                margin: 5px 0px;
+            }
+
+            #list{
+                margin: 50px 0 50px 0;
+            }
+
+        </style>
+
+        <div class="container">
+            <h3 class="beautiful-title">Salut, je suis la todo list de <span>{{username}}</span></h3>
+
+            <div id="list">
+                <template is="dom-repeat" class="container" items="{{tasks}}">
+                    <template is="dom-if" if="{{!item.isDeleted}}">
+                        <task-element id="task{{index}}" class="task-element" title="[[item.title]]" idtask="[[index]]" on-delete="[[_deleteTask]]" ></task-element>
+                    <!--<task-element class="task-element col-xs-9" title="{{item.title}}" idtask="{{item.id}}" on-edit="{{_editTask}}" on-delete="{{_deleteTask}}"></task-element>-->
+                    </template>
+
+
+                </template>
+            </div>
+
+            <div id="formAdd" class="animated">
+                <form-add class="text-center" placeholder="nouvelle tâche" on-submit="{{_addTask}}"></form-add>
+            </div>
+
+        </div>
+    </template>
+</dom-module>
+
+<script>
+
+    class MyTodoList extends Polymer.Element {
+
+        static get is() { return 'my-todo-list'; }
+
+        static get properties() {
+            return {
+                username: String,
+                title: String,
+                tasks: {
+                    type: Array,
+                    value() {
+                        return [];
+                    }
+                }
+            };
+        }
+
+        constructor(){
+
+            super()
+            this.newTask = "";
+        }
+
+        ready() {
+            super.ready();
+
+            // binding the context
+            this._editTask = this._editTask.bind(this)
+            this._deleteTask = this._deleteTask.bind(this)
+            this._addTask = this._addTask.bind(this)
+
+        }
+
+        _addTask(titleTask) {
+
+            console.log(titleTask)
+
+            if(!titleTask) {return}
+
+
+            setTimeout(()=> {
+                this._animateFormAdd('fadeInDown')
+            }, 300)
+
+            this.push('tasks', {
+                title: titleTask,
+                isDeleted: false
+                //color: this.generateColorHexa()
+            })
+
+
+
+            console.log(this.tasks)
+
+        }
+
+        _editTask(id, nameTask) {
+            console.log("editing this task id" + id)
+
+            let currentTask = this.tasks.find((el) => { if (el.id === id) {return el}})
+            currentTask.title = nameTask;
+
+            console.log(this.tasks)
+        }
+
+        _deleteTask(idToDelete) {
+
+            console.log("deleting this task id " + idToDelete)
+
+//            this.$.domRepeat.modelForElement(event.target).set('item.checked', true)
+
+//            this.tasks.splice(idToDelete, 1)
+//            this.splice("tasks", idToDelete, 1)
+
+            this._animateFormAdd('flipInX')
+            this.tasks[idToDelete].isDeleted = true
+            this.notifyPath('tasks.'+idToDelete+'.isDeleted')
+            console.log(this.tasks)
+            console.log(this.tasks[idToDelete].isDeleted)
+            console.log('tasks.'+idToDelete+'.isDeleted')
+        }
+
+
+        _animateFormAdd(animation){
+            let formAdd = this.$.formAdd
+
+            return new Promise((resolve, reject)=>{
+                formAdd.classList.add(animation)
+
+                setTimeout( ()=>
+                    {
+                        formAdd.classList.remove(animation)
+                        resolve()
+                    }, 700)
+            })
+
+
+        }
+
+
+    }
+
+    customElements.define(MyTodoList .is, MyTodoList );
+
+
+
+</script>

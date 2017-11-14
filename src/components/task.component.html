@@ -1,0 +1,109 @@
+<link rel="import" href="/bower_components/iron-input/iron-input.html">
+<link rel="import" href="/bower_components/polymer/lib/elements/dom-repeat.html">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
+<!-- Add style to your element -->
+<dom-module id="task-element">
+
+    <template>
+        <link rel="stylesheet" href="/src/css/bootstrap.css">
+        <link rel="stylesheet" href="/src/css/animate.css">
+
+        <style>
+         #task {
+            height: 60px;
+         }
+        </style>
+
+        <div>
+            <div id="task" class="taskTitle animated draggable" hidden>
+                <task-title id="taskTitle" class="task-element col-xs-9 col-xs-offset-1" title="{{title}}" color="{{color}}" on-edit="{{_handleEdit}}"></task-title>
+                <delete-btn class=" task-element col-xs-1 " idtask="{{item.id}}" on-delete="{{_handleDelete}}"></delete-btn>
+            </div>
+        </div>
+
+    </template>
+
+</dom-module>
+
+<script>
+
+    class Task extends Polymer.Element {
+
+        static get is() { return 'task-element'; }
+
+        static get properties() {
+            return {
+                title:String,
+                idtask: Number,
+                onEdit: Function,
+                onDelete: Function
+            };
+        }
+
+        constructor(){
+
+            super()
+
+            this.animation = "flipInX"
+
+        }
+
+
+        ready(){
+            super.ready()
+            console.log('ready')
+            console.log(this.idtask)
+//            this.$.task.classList.add('bounceOut')
+
+            this._animate(this.animation)
+//            this.$.task.classList.add(this.animation)
+            this._handleEdit= this._handleEdit.bind(this)
+            this._handleDelete = this._handleDelete.bind(this)
+
+            setTimeout(() => {
+                this.$.task.hidden = false
+            }, 200)
+
+        }
+
+        _handleEdit(newTitle){
+            if(newTitle){
+                this.title = newTitle
+            }
+           /* else if(newTitle === ''){
+                this._handleDelete()
+            }*/
+        }
+
+        _handleDelete(){
+
+            let _this = this
+
+            this._animate('bounceOut')
+                .then(function () {
+                    _this.onDelete(_this.idtask)
+                })
+        }
+
+        _animate(animationClass){
+
+            let taskElementHTML = this.$.task
+
+            taskElementHTML.classList.add(animationClass)
+            console.log(taskElementHTML)
+            return new Promise(function(resolve, reject){
+
+
+                setTimeout(function () {
+                    taskElementHTML.classList.remove(animationClass)
+                    resolve()
+                }, 700)
+
+            })
+        }
+    }
+
+    customElements.define(Task.is, Task);
+
+
+</script>

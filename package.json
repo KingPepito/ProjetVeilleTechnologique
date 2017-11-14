@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@polymer/polymer": "https://github.com/Polymer/polymer.git",
+    "@shopify/draggable": "^1.0.0-beta.3",
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-standalone": "babel/babel-standalone"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}

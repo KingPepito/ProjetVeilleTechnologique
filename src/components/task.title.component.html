@@ -1,0 +1,132 @@
+<link rel="import" href="/bower_components/iron-input/iron-input.html">
+<link rel="import" href="/bower_components/polymer/lib/elements/dom-repeat.html">
+
+<!-- Add style to your element -->
+<dom-module id="task-title">
+    <template>
+        <link rel="stylesheet" href="/src/css/bootstrap.css">
+        <link rel="stylesheet" href="/src/css/animate.css">
+        <style>
+            .taskTitle{
+                min-height: 50px;
+                line-height: 50px;
+                color: whitesmoke;
+                margin-top: -12px;
+            }
+
+            input{
+                width: 100%;
+                margin: 10px;
+                font-weight: 600;
+                border: none;
+                background-color: inherit;
+                color: whitesmoke;
+                overflow-wrap: break-word;
+                cursor: pointer;
+                border:solid whitesmoke medium;
+                border-radius: 10px;
+                border: none;
+                background-color: inherit;
+                outline:none;
+            }
+
+            input:hover{
+                transition: 1s;
+                color: #222222;
+                background-color: whitesmoke;
+            }
+
+            #inputTask{
+                font-family: MathJax_Caligraphicf;
+                font-size: x-large;
+                margin-top: 10px;
+                width: 100%;
+                border-radius: 10px;
+            }
+        </style>
+
+        <div>
+            <div id="task" class="taskTitle animated ">
+
+                <iron-input id="inputTask" bind-value="{{title}}" class="text-center"
+                            on-click="_activateInput">
+                    <input id="inputEdit" type="text" disabled="{{!isEditing}}" class="text-center" on-keyup="handleEdit">
+                </iron-input>
+
+            </div>
+        </div>
+
+    </template>
+</dom-module>
+
+<script>
+
+    class TaskTitle extends Polymer.Element {
+
+        static get is() { return 'task-title'; }
+
+        static get properties() {
+            return {
+                title:String,
+                color:String,
+                idtask: Number,
+                onEdit: Function,
+                onDelete: Function
+            };
+        }
+
+        constructor(){
+            super()
+            this.isEditing = false
+        }
+
+        ready(){
+            super.ready()
+            console.log(this.title)
+
+            if(!this.color){
+                this.color = this.generateColorHexa()
+            }
+            console.log(this.color)
+
+            this.$.inputTask.style.backgroundColor = this.color
+        }
+
+
+        handleEdit(e){
+            this.onEdit(this.title)
+            if(e.key == "Enter"){
+                this._desactivateInput()
+            }
+        }
+
+        //used to generate a random color for the title
+        generateColorHexa(){
+
+            let mini = 32
+
+            let c = () => {
+                let hex =  Math.max(Math.floor(Math.random()*16)*256/16, mini)
+                    .toString(16)
+                return(String(hex)).substring(-2)
+            }
+
+            return ("#" + c()+ c()+ c())
+        }
+
+        _activateInput(){
+            this.isEditing = true
+            console.log(this.$.inputEdit)
+            this.$.inputEdit.focus()
+        }
+
+        _desactivateInput(){
+            this.isEditing = false
+            this.$.task.focus ()
+        }
+    }
+
+    customElements.define(TaskTitle.is, TaskTitle);
+
+
+</script>

@@ -1,0 +1,53 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/components/my-todo-list.component.html">
+
+<dom-module id="testpolymer2-app">
+  <template>
+    <link rel="stylesheet" href="/src/css/bootstrap.css">
+    <style>
+      :host {
+        display: block;
+      }
+
+      .beautiful-title
+      {
+         font-family: 'Courier New', Courier, monospace;
+         color: #902815;
+        font-weight: bold;
+      }
+
+    </style>
+
+    <div class="container">
+
+      <h1 class="beautiful-title text-center col-lg-4 col-lg-offset-4">Ma Todo List</h1>
+
+      <my-todo-list class="col-lg-12" username="Dude" title="ma liste de test"></my-todo-list>
+    </div>
+
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Testpolymer2App extends Polymer.Element {
+      static get is() { return 'testpolymer2-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'testpolymer2-app'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(Testpolymer2App.is, Testpolymer2App);
+
+
+    console.log(window)
+  </script>
+</dom-module>
