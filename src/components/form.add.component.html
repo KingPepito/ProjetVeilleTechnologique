@@ -68,6 +68,12 @@
 
         ready(){
             super.ready()
+
+            this.addEventListener('newtask', this.test);
+        }
+
+        test(){
+            alert('test')
         }
 
         _handleSubmit(){

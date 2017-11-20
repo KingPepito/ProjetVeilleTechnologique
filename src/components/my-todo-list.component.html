@@ -1,4 +1,6 @@
+
 <link rel="import" href="/src/components/task.component.html">
+
 <link rel="import" href="/src/components/task.title.component.html">
 <link rel="import" href="/src/components/form.add.component.html">
 <link rel="import" href="/src/components/button.delete.component.html">
@@ -9,6 +11,7 @@
 
 <!-- Add style to your element -->
 <dom-module id="my-todo-list">
+
     <template>
         <link rel="stylesheet" href="/src/css/bootstrap.css">
         <link rel="stylesheet" href="/src/css/animate.css">
@@ -21,7 +24,7 @@
             }
 
             .beautiful-title{
-                color: rgba(13, 104, 121, 0.82);
+                color: #386663;
                 text-transform: uppercase;
                 font-family: Helvetica;
             }
@@ -43,10 +46,7 @@
                 <template is="dom-repeat" class="container" items="{{tasks}}">
                     <template is="dom-if" if="{{!item.isDeleted}}">
                         <task-element id="task{{index}}" class="task-element" title="[[item.title]]" idtask="[[index]]" on-delete="[[_deleteTask]]" ></task-element>
-                    <!--<task-element class="task-element col-xs-9" title="{{item.title}}" idtask="{{item.id}}" on-edit="{{_editTask}}" on-delete="{{_deleteTask}}"></task-element>-->
                     </template>
-
-
                 </template>
             </div>
 
@@ -129,17 +129,15 @@
 
             console.log("deleting this task id " + idToDelete)
 
-//            this.$.domRepeat.modelForElement(event.target).set('item.checked', true)
-
-//            this.tasks.splice(idToDelete, 1)
-//            this.splice("tasks", idToDelete, 1)
-
             this._animateFormAdd('flipInX')
             this.tasks[idToDelete].isDeleted = true
             this.notifyPath('tasks.'+idToDelete+'.isDeleted')
             console.log(this.tasks)
             console.log(this.tasks[idToDelete].isDeleted)
             console.log('tasks.'+idToDelete+'.isDeleted')
+
+            this.dispatchEvent(new CustomEvent('addtask'));
+
         }
 
 

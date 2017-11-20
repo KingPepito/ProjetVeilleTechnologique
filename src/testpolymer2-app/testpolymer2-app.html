@@ -5,22 +5,28 @@
   <template>
     <link rel="stylesheet" href="/src/css/bootstrap.css">
     <style>
-      :host {
-        display: block;
+      :host-context(body) {
       }
 
       .beautiful-title
       {
          font-family: 'Courier New', Courier, monospace;
-         color: #902815;
+         color: whitesmoke;
         font-weight: bold;
+        font-size: 3em;
+        background-color: #5F111F;
+        width: 100vw;
+        height: 80px;
+        line-height: 80px;
+        padding-left: 10px;
+        margin-left: -8px;
       }
 
     </style>
 
+    <h1 class="beautiful-title text-center ">My Todo List</h1>
     <div class="container">
 
-      <h1 class="beautiful-title text-center col-lg-4 col-lg-offset-4">Ma Todo List</h1>
 
       <my-todo-list class="col-lg-12" username="Dude" title="ma liste de test"></my-todo-list>
     </div>

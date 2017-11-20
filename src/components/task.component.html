@@ -20,7 +20,6 @@
                 <delete-btn class=" task-element col-xs-1 " idtask="{{item.id}}" on-delete="{{_handleDelete}}"></delete-btn>
             </div>
         </div>
-
     </template>
 
 </dom-module>
@@ -92,7 +91,6 @@
             taskElementHTML.classList.add(animationClass)
             console.log(taskElementHTML)
             return new Promise(function(resolve, reject){
-
 
                 setTimeout(function () {
                     taskElementHTML.classList.remove(animationClass)

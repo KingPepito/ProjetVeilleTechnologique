@@ -3,9 +3,11 @@
 
 <!-- Add style to your element -->
 <dom-module id="task-title">
+
     <template>
         <link rel="stylesheet" href="/src/css/bootstrap.css">
         <link rel="stylesheet" href="/src/css/animate.css">
+
         <style>
             .taskTitle{
                 min-height: 50px;
@@ -45,18 +47,17 @@
             }
         </style>
 
-        <div>
-            <div id="task" class="taskTitle animated ">
+        <div id="task" class="taskTitle animated ">
 
-                <iron-input id="inputTask" bind-value="{{title}}" class="text-center"
-                            on-click="_activateInput">
-                    <input id="inputEdit" type="text" disabled="{{!isEditing}}" class="text-center" on-keyup="handleEdit">
-                </iron-input>
+            <iron-input id="inputTask" bind-value="{{title}}" class="text-center"
+                        on-click="_activateInput">
+                <input id="inputEdit" type="text" disabled="{{!isEditing}}" class="text-center" on-keyup="handleEdit">
+            </iron-input>
 
-            </div>
         </div>
 
     </template>
+
 </dom-module>
 
 <script>
@@ -85,7 +86,7 @@
             console.log(this.title)
 
             if(!this.color){
-                this.color = this.generateColorHexa()
+                this.color = this.generateColorHexaV3()
             }
             console.log(this.color)
 
@@ -105,13 +106,41 @@
 
             let mini = 32
 
-            let c = () => {
+            /*let c = () => {
                 let hex =  Math.max(Math.floor(Math.random()*16)*256/16, mini)
                     .toString(16)
                 return(String(hex)).substring(-2)
+            }*/
+
+            let c = () => {
+                return Math.max(Math.floor(Math.random()*16)*256/16, mini)
             }
 
-            return ("#" + c()+ c()+ c())
+            return ("rgb(" + c() + ',' + c()+ ','+ c()+')')
+        }
+
+        generateColorHexaV2(){
+            let arrayFlatColor = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50", "#f1c40f", "#e67e22", "#e74c3c", "#f39c12", "#d35400", "#c0392b", "#7f8c8d"]
+
+            let index = Math.floor(Math.random()*arrayFlatColor.length)
+
+            return arrayFlatColor[index]
+        }
+
+        //From Colormind.io
+        generateColorHexaV3(){
+            let arrayFlatColor = [
+                "#5F111F",
+                "#B82727",
+                "#C5792B",
+                "#386663",
+                "#546D83",
+                "#A48F67"
+            ]
+
+            let index = Math.floor(Math.random()*arrayFlatColor.length)
+
+            return arrayFlatColor[index]
         }
 
         _activateInput(){
