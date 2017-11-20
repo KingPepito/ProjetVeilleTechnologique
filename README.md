@@ -12,7 +12,7 @@ This project is using Polymer. The dependencies are handling by Bower and Yarn. 
 First clone the project with npm:
 
 ```
-$ npm clone https://github.com/KingPepito/ProjetVeilleTechnologique.git
+$ git clone https://github.com/KingPepito/ProjetVeilleTechnologique.git
 ```
 
 
@@ -42,4 +42,10 @@ and
 
 ```
 $ yarn
+```
+
+Finally run it:
+
+```
+$ polymer serve
 ```
